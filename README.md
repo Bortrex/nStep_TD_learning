@@ -14,11 +14,19 @@ QLearning is a model-free RL algorithm that learns the value of an action in a p
   
     $Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, a)\right]$
 
+### N-Step QLearning
+N-step QLearning is again a variant of QLearning that also looks n-steps ahead before updating the value estimates.
+
 ### N-Step SARSA
 N-step SARSA is an extension of the standard SARSA (State-Action-Reward-State-Action) learning algorithm, using the idea of looking n-steps ahead in the action-value updating rule. This approach helps in accelerating the learning process by leveraging more future information.
 
-### N-Step QLearning
-N-step QLearning is again a variant of QLearning that also looks n-steps ahead before updating the value estimates.
+- Update rule:
+
+    $Q(s_t, a_t) \gets Q(s_t, a_t) + \alpha \\: [G_{t:t+n} - Q(s_t, a_t)]$
+  
+  with: $G_{t:t+n} = r_{t+1} + \gamma \\: r_{t+2} + \ldots + \gamma^{n-1} \\: r_{t+n} + \gamma^n \\: Q_{t+n-1} \\: (s_{t+n}, a_{t+n})$
+
+
 
 
 ## Results
