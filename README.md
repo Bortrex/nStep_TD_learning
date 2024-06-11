@@ -10,6 +10,7 @@ This repository contains implementations of Temporal Difference (TD) learning al
 
 QLearning is a model-free RL algorithm that learns the value of an action in a particular state. It does not require a model of the environment.
 
+- Update rule
 $Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, a)\right]$
 
 ### N-Step SARSA
