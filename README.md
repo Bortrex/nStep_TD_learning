@@ -40,6 +40,12 @@ Results from our experiments indicate how each algorithm performs in terms of cu
 
 ![cumm_reward](https://github.com/Bortrex/TD_learning/assets/24497590/286a1b95-8b2d-4f9b-b4fd-41faeba4b759)
 
+### N-Step QLearning
+
+The best agent after training is $n$-step Q Learning algorithm. Below is the resulting model.
+
+![QL_gif](https://github.com/user-attachments/assets/e9ac9317-1fb0-4ec8-ace1-1161e5115c2a)
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
