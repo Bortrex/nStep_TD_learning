@@ -57,7 +57,7 @@ Each curve is the mean exponentially smoothed episode reward across the 10 runs.
 *Main comparison: the reward-axis zoom emphasizes later training performance. Values below −200 are clipped; the horizontal axis still spans all 500 episodes.*
 
 <p align="center">
-    <img src="docs/images//nStep_TD_learning.png" alt="Full learning curves showing the early reward decline and subsequent improvement over 500 episodes" width="520">
+    <img src="docs/images/nStep_TD_learning.png" alt="Full learning curves showing the early reward decline and subsequent improvement over 500 episodes" width="520">
 </p>
 
 Q-learning has higher mean smoothed reward early in training. Around the middle, 4-Step Q-learning moves ahead. 4-Step SARSA improves more strongly later and moves above Q-learning. Near the end, 4-Step Q-learning reaches the highest mean smoothed reward, followed by 4-Step SARSA and Q-learning (approximately −16.53, −23.26, and −38.98 at the final episode).
