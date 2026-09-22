@@ -1,6 +1,10 @@
-# $n$-step TD Learning
+# One-Step vs. $n$-Step TD Control in Taxi-v3
 
-This repository contains implementations of Temporal Difference (TD) learning algorithms applied to the OpenAI Gym Taxi-v3 environment. The project is composed of three algorithms, each of these methods is explored and experimented to analyze their performance in the discrete decision-making domain.
+This project explores how one-step and multi-step temporal-difference (TD) learning algorithms perform in the Gymnasium Taxi-v3 environment.
+
+Three tabular reinforcement learning algorithms are implemented and compared: Q-learning, 4-step Q-learning, and 4-step SARSA. The experiment examines how the choice of learning algorithm and the use of multi-step returns affect the agents' learning behavior and accumulated rewards.
+
+Each algorithm is trained over multiple runs, and the resulting learning curves are used to compare their performance during training.
 
 
 
