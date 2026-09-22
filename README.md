@@ -1,57 +1,71 @@
-# $n$-step TD Learning
+# One-Step vs. $n$-Step TD Control in Taxi-v3
 
-This repository contains implementations of Temporal Difference (TD) learning algorithms applied to the OpenAI Gym Taxi-v3 environment. The project is composed of three algorithms, each of these methods is explored and experimented to analyze their performance in the discrete decision-making domain.
+This project explores how one-step and multi-step temporal-difference (TD) learning algorithms perform in the Gymnasium Taxi-v3 environment.
 
+Three tabular reinforcement learning algorithms are implemented and compared: Q-learning, 4-step Q-learning, and 4-step SARSA. The experiment examines how the choice of learning algorithm and the use of multi-step returns affect the agents' learning behavior and accumulated rewards.
 
+Each algorithm is trained over multiple runs, and the resulting learning curves are used to compare their performance during training.
+
+## Usage
+
+Install Python with `gymnasium`, `numpy`, `matplotlib`, and Jupyter. From the repository directory, open the notebook and run all cells in order:
+
+```bash
+jupyter notebook gym_taxiV3.ipynb
+```
+
+The notebook also saves the two comparison figures in `plots/`.
 
 ## Agents
 
-### QLearning
+### Q-learning
 
-QLearning is a model-free RL algorithm that learns the value of an action in a particular state. It does not require a model of the environment.
+Q-learning is a model-free algorithm that updates action values after each transition.
 
-- Update rule:
-  
-    $Q(s, a) \leftarrow Q(s, a) + \alpha \left[r + \gamma \max_{a'} Q(s', a') - Q(s, a)\right]$
+$Q(s, a) \leftarrow Q(s, a) + \alpha [r + \gamma \max_{a'} Q(s', a') - Q(s, a)]$
 
-### N-Step QLearning
-N-step QLearning is again a variant of QLearning that also looks n-steps ahead before updating the value estimates.
+### 4-Step Q-learning
 
-- Update rule:
+This variant uses four observed rewards before bootstrapping from the maximum action value.
 
-    $Q(s_t, a_t) \gets Q(s_t, a_t) + \alpha \\: [G_{t:t+n} - Q(s_t, a_t)]$
-  
-  with: $G_{t:t+n} = r_{t+1} + \gamma \\: r_{t+2} + \ldots + \gamma^{n-1} \\: r_{t+n} + \gamma^n \\: \max_{a'} Q_{t+n-1} \\: (s_{t+n}, a')$
+$Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha [G_{t:t+n} - Q(s_t, a_t)]$
 
-### N-Step SARSA
-N-step SARSA is an extension of the standard SARSA (State-Action-Reward-State-Action) learning algorithm, using the idea of looking n-steps ahead in the action-value updating rule. This approach helps in accelerating the learning process by leveraging more future information.
+With $n = 4$:
 
-- Update rule:
+$G_{t:t+n} = r_{t+1} + \gamma r_{t+2} + \ldots + \gamma^{n-1} r_{t+n} + \gamma^n \max_{a'} Q_{t+n-1}(s_{t+n}, a')$
 
-    $Q(s_t, a_t) \gets Q(s_t, a_t) + \alpha \\: [G_{t:t+n} - Q(s_t, a_t)]$
-  
-  with: $G_{t:t+n} = r_{t+1} + \gamma \\: r_{t+2} + \ldots + \gamma^{n-1} \\: r_{t+n} + \gamma^n \\: Q_{t+n-1} \\: (s_{t+n}, a_{t+n})$
+### 4-Step SARSA
 
+SARSA (State-Action-Reward-State-Action) uses the same four-reward horizon, but bootstraps from the action selected by its epsilon-greedy policy.
 
+$Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha [G_{t:t+n} - Q(s_t, a_t)]$
 
+With $n = 4$:
+
+$G_{t:t+n} = r_{t+1} + \gamma r_{t+2} + \ldots + \gamma^{n-1} r_{t+n} + \gamma^n Q_{t+n-1}(s_{t+n}, a_{t+n})$
+
+These returns stop without bootstrapping at true termination. At the 300-step time limit, pending returns instead bootstrap from the final nonterminal state, using the appropriate action value for each algorithm.
 
 ## Results
-Results from our experiments indicate how each algorithm performs in terms of cummulative reward across various episodes.
 
-![cumm_reward](https://github.com/Bortrex/TD_learning/assets/24497590/286a1b95-8b2d-4f9b-b4fd-41faeba4b759)
+The Taxi-v3 experiment uses 500 episodes per run and 10 runs with seeds 123–132. Hyperparameters are fixed: learning rate $\alpha=0.15$, discount factor $\gamma=0.95$, $\epsilon$-greedy=0.2, and a 300-step episode limit. Both multi-step methods use $n = 4$.
 
-### N-Step QLearning
+Each curve is the mean exponentially smoothed episode reward across the 10 runs. Within each run, smoothing starts at zero and follows $M_e = 0.95 M_{e-1} + 0.05 R_e$, where $R_e$ is the total reward in episode $e$.
 
-The best performing agent in the environment is $n$-step Q Learning algorithm. Below is the resulting model.
+![Zoomed learning curves comparing Q-learning, 4-Step Q-learning, and 4-Step SARSA](docs/images/nStep_TD_learning_zoomed.png)
 
-![QL_gif](https://github.com/user-attachments/assets/e9ac9317-1fb0-4ec8-ace1-1161e5115c2a)
+*Main comparison: the reward-axis zoom emphasizes later training performance. Values below −200 are clipped; the horizontal axis still spans all 500 episodes.*
+
+<p align="center">
+    <img src="docs/images/nStep_TD_learning.png" alt="Full learning curves showing the early reward decline and subsequent improvement over 500 episodes" width="520">
+</p>
+
+Q-learning has higher mean smoothed reward early in training. Around the middle, 4-Step Q-learning moves ahead. 4-Step SARSA improves more strongly later and moves above Q-learning. Near the end, 4-Step Q-learning reaches the highest mean smoothed reward, followed by 4-Step SARSA and Q-learning (approximately −16.53, −23.26, and −38.98 at the final episode).
 
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-## Authors
+## Author
 
 – [@Bortrex](https://github.com/Bortrex)
-
-
