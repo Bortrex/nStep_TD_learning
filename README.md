@@ -62,6 +62,12 @@ Each curve is the mean exponentially smoothed episode reward across the 10 runs.
 
 Q-learning has higher mean smoothed reward early in training. Around the middle, 4-Step Q-learning moves ahead. 4-Step SARSA improves more strongly later and moves above Q-learning. Near the end, 4-Step Q-learning reaches the highest mean smoothed reward, followed by 4-Step SARSA and Q-learning (approximately −16.53, −23.26, and −38.98 at the final episode).
 
+### Example policy rollout
+
+The animation below shows a trained 4-Step Q-learning agent solving the Taxi-v3 task.
+
+![4-Step Q-learning Taxi-v3 rollout](https://github.com/user-attachments/assets/e9ac9317-1fb0-4ec8-ace1-1161e5115c2a)
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
