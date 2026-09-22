@@ -52,11 +52,13 @@ The Taxi-v3 experiment uses 500 episodes per run and 10 runs with seeds 123–13
 
 Each curve is the mean exponentially smoothed episode reward across the 10 runs. Within each run, smoothing starts at zero and follows $M_e = 0.95 M_{e-1} + 0.05 R_e$, where $R_e$ is the total reward in episode $e$.
 
-![Zoomed learning curves comparing Q-learning, 4-Step Q-learning, and 4-Step SARSA](plots/nStep_TD_learning_zoomed.png)
+![Zoomed learning curves comparing Q-learning, 4-Step Q-learning, and 4-Step SARSA](docs/images/nStep_TD_learning_zoomed.png)
 
 *Main comparison: the reward-axis zoom emphasizes later training performance. Values below −200 are clipped; the horizontal axis still spans all 500 episodes.*
 
-<img src="plots/nStep_TD_learning.png" alt="Full learning curves showing the early reward decline and subsequent improvement over 500 episodes" width="520">
+<p align="center">
+    <img src="docs/images//nStep_TD_learning.png" alt="Full learning curves showing the early reward decline and subsequent improvement over 500 episodes" width="520">
+</p>
 
 Q-learning has higher mean smoothed reward early in training. Around the middle, 4-Step Q-learning moves ahead. 4-Step SARSA improves more strongly later and moves above Q-learning. Near the end, 4-Step Q-learning reaches the highest mean smoothed reward, followed by 4-Step SARSA and Q-learning (approximately −16.53, −23.26, and −38.98 at the final episode).
 
